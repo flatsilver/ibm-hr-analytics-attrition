@@ -1,0 +1,56 @@
+---
+title: "IBM HR Analytics Employee Attritionをランダムフォレストで分析する"
+author: "Gimpei Misono"
+date: "2018/11/25"
+output: 
+  html_document:
+    number_sections: true
+    toc: true
+    fig_width: 7
+    fig_height: 4.5
+    theme: readable
+    highlight: tango
+    df_print: "paged"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 導入
+
+こんにちは。  
+[Kaggle](https://www.kaggle.com/)のdatasetに[IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)というものがあり、自分ならどのように分析するか試したのでその結果をoutputとして公開してみようと思います。
+
+まだまだ初学者の域をでないので誤りなどあればご指摘いただけるとありがたいです。
+
+このエントリでは以下を行います。
+
+* いくつか重要そうな変数のEDA
+* ランダムフォレストを用いたモデリング
+* IBM HRが取るべきアクションへの提言
+
+### 準備とデータの確認
+
+```{r, message=FALSE}
+# パッケージのLoad
+library(tidyverse)
+library(scales)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+```
+
+これでパッケージのロードができたので、データを確認します。  
+[datasetのサイト](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)からデータをダウンロードしておきます。
+
+```{r, message=FALSE, warning=FALSE}
+ibm <- read_csv("WA_Fn-UseC_-HR-Employee-Attrition.csv")
+
+# 先頭6行の表示
+head(ibm)
+```
+
+変数が多いので
+
+## 要約
