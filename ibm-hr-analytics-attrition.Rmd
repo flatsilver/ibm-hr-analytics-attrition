@@ -73,10 +73,36 @@ anyNA(ibm)
 
 ### Attritionに影響を与える変数の仮説
 
-* hogehoge
+* AgeとAttritionに関係はあるのか？
+* MonthlyIncome, RateとAttritionはどのような関係にあるのか？
 
 ## 要約
 
 * hogehoge
 
 ## A quick EDA
+
+### Attritionの分布の確認
+
+```{r}
+ibm %>% 
+  group_by(Attrition) %>% 
+  summarise(
+    age_mean = mean(Age, na.rm = TRUE),
+    n = n()
+  )
+```
+
+```{r}
+ggplot(ibm, aes(Attrition)) +
+  geom_bar()
+```
+
+
+### AgeとAttritionの関係
+
+```{r}
+ggplot(ibm, aes(Age, fill = Attrition)) +
+  geom_density(alpha = 0.7)
+```
+
