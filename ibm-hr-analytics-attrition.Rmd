@@ -24,9 +24,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 まだまだ初学者の域をでないので誤りなどあればご指摘いただけるとありがたいです。
 
-このエントリでは以下を行います。
+このドキュメントでは以下を行います。
 
-* いくつか重要そうな変数のEDA
+* 目的変数に影響を与えそうな変数のEDA
 * ランダムフォレストを用いたモデリング
 * IBM HRが取るべきアクションへの提言
 
@@ -42,7 +42,9 @@ library(randomForest)
 ```
 
 これでパッケージのロードができたので、データを確認します。  
-[datasetのサイト](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)からデータをダウンロードしておきます。
+[datasetのサイト](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)からデータをダウンロードしておきます。  
+
+また、Overviewの中に記載されていますが、架空のデータセットとなっており各変数がどのような意味を持っているかわからないものがあります。
 
 ```{r, message=FALSE, warning=FALSE}
 ibm <- read_csv("WA_Fn-UseC_-HR-Employee-Attrition.csv")
@@ -51,6 +53,30 @@ ibm <- read_csv("WA_Fn-UseC_-HR-Employee-Attrition.csv")
 head(ibm)
 ```
 
-変数が多いので
+変数が多いので[こちら](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset/home)を参照していただけるとありがたいです。
+
+```{r}
+# 欠損値がないかの確認
+anyNA(ibm)
+```
+
+架空データなだけあって欠損値はなさそうです。
+
+### AttritionとTurnoverの違い
+
+今回の目的変数でもあるAttritionについてですが、Turnoverとの違いをまずは考えてみます。[このサイト](https://smallbusiness.chron.com/employee-turnover-vs-attrition-15846.html)によると以下の違いがあると考えられそうです。
+
+* Attritionは従業員のライフサイクルによる自然（受動的な）退職
+* Turnoverはより良い職場への転職など従業員による自発的な退職
+
+しかし、AttritionがTurnoverを包括した概念なのか、対立関係にある概念なのかは若干疑問が残ります。ただ、ゆるく重なり合っていると捉える場合、Attritionという表記から検証すべき仮説がいくつか出てきました。
+
+### Attritionに影響を与える変数の仮説
+
+* hogehoge
 
 ## 要約
+
+* hogehoge
+
+## A quick EDA
