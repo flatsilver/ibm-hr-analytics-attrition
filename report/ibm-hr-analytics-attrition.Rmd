@@ -47,7 +47,7 @@ library(randomForest)
 また、Overviewの中に記載されていますが、架空のデータセットとなっており各変数がどのような意味を持っているかわからないものがあります。
 
 ```{r, message=FALSE, warning=FALSE}
-ibm <- read_csv("WA_Fn-UseC_-HR-Employee-Attrition.csv")
+ibm <- read_csv("../data/WA_Fn-UseC_-HR-Employee-Attrition.csv")
 
 # 先頭6行の表示
 head(ibm)
