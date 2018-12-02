@@ -88,16 +88,17 @@ anyNA(ibm)
 ibm %>% 
   group_by(Attrition) %>% 
   summarise(
-    age_mean = mean(Age, na.rm = TRUE),
-    n = n()
+    n = n(),
+    percentage = n() / length(ibm$Attrition)
   )
 ```
 
 ```{r}
-ggplot(ibm, aes(Attrition)) +
+ggplot(ibm, aes(Attrition, fill = Attrition)) +
   geom_bar()
 ```
 
+Attritionが約16%ほど存在することがわかりました。何年分のデータを利用しているかわかりませんが、1年間だとすると多いような感覚ですね。
 
 ### AgeとAttritionの関係
 
@@ -106,3 +107,6 @@ ggplot(ibm, aes(Age, fill = Attrition)) +
   geom_density(alpha = 0.7)
 ```
 
+年齢に関して見ると、若い方のAttritionが多い傾向にあるようです。
+
+### 
