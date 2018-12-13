@@ -17,7 +17,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 導入
+# 導入
 
 こんにちは。  
 [Kaggle](https://www.kaggle.com/)のdatasetに[IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)というものがあり、自分ならどのように分析するか試したのでその結果をoutputとして公開してみようと思います。
@@ -30,12 +30,13 @@ knitr::opts_chunk$set(echo = TRUE)
 * ランダムフォレストを用いたモデリング
 * IBM HRが取るべきアクションへの提言
 
-### 準備とデータの確認
+## 準備とデータの確認
 
 ```{r, message=FALSE}
 # パッケージのLoad
 library(tidyverse)
 library(scales)
+library(GGally)
 library(rpart)
 library(rpart.plot)
 library(randomForest)
@@ -62,7 +63,7 @@ anyNA(ibm)
 
 架空データなだけあって欠損値はなさそうです。
 
-### AttritionとTurnoverの違い
+## AttritionとTurnoverの違い
 
 今回の目的変数でもあるAttritionについてですが、Turnoverとの違いをまずは考えてみます。[このサイト](https://smallbusiness.chron.com/employee-turnover-vs-attrition-15846.html)によると以下の違いがあると考えられそうです。
 
@@ -71,36 +72,36 @@ anyNA(ibm)
 
 しかし、AttritionがTurnoverを包括した概念なのか、対立関係にある概念なのかは若干疑問が残ります。ただ、ゆるく重なり合っていると捉える場合、Attritionという表記から検証すべき仮説がいくつか出てきました。
 
-### Attritionに影響を与える変数の仮説
+## Attritionに影響を与える変数の仮説
 
 * AgeとAttritionに関係はあるのか？
 * MonthlyIncome, RateとAttritionはどのような関係にあるのか？
 
-## 要約
+# 要約
 
 * hogehoge
 
-## A quick EDA
+# A quick EDA
 
-### Attritionの分布の確認
+## Attritionの分布の確認
 
 ```{r}
-ibm %>% 
+foo <- ibm %>% 
   group_by(Attrition) %>% 
-  summarise(
-    n = n(),
-    percentage = n() / length(ibm$Attrition)
-  )
-```
+  count()
 
-```{r}
-ggplot(ibm, aes(Attrition, fill = Attrition)) +
-  geom_bar()
+foo %>% 
+  mutate(percentage = str_c(as.character(round(n / sum(foo$n) * 100, 1)), "%")) %>% 
+  ggplot(aes(Attrition, n, fill = Attrition)) +
+  geom_col() +
+  geom_label(aes(label = percentage), position = position_dodge(width = 1)) +
+  labs(y = "Number of people") +
+  theme(legend.position = "none")
 ```
 
 Attritionが約16%ほど存在することがわかりました。何年分のデータを利用しているかわかりませんが、1年間だとすると多いような感覚ですね。
 
-### AgeとAttritionの関係
+## AgeとAttritionの関係
 
 ```{r}
 ggplot(ibm, aes(Age, fill = Attrition)) +
@@ -109,4 +110,10 @@ ggplot(ibm, aes(Age, fill = Attrition)) +
 
 年齢に関して見ると、若い方のAttritionが多い傾向にあるようです。
 
-### 
+## MonthlyIncome, RateとAttritionはどのような関係にあるのか？
+
+```{r}
+pm <- ggpairs(ibm, mapping = aes(colour = Attrition), columns = c("MonthlyIncome", "MonthlyRate", "DailyRate", "HourlyRate"))
+pm
+```
+
