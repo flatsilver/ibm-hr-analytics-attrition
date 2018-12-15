@@ -29,5 +29,9 @@ p1 <- foo %>%
 ggplot(ibm, aes(MonthlyIncome, MonthlyRate)) +
   geom_hex()
 
-pm <- ggpairs(ibm, mapping = aes(colour = Attrition), columns = c("MonthlyIncome", "MonthlyRate", "DailyRate", "HourlyRate"))
+# Visualize Income and Rate
+pm <- ggpairs(ibm, mapping = aes(colour = Attrition, alpha = 0.7), columns = c("MonthlyIncome", "MonthlyRate", "DailyRate", "HourlyRate"))
 pm
+
+ggplot(ibm, aes(Attrition, MonthlyIncome, fill = Attrition)) +
+  geom_boxplot()
