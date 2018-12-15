@@ -77,6 +77,8 @@ anyNA(ibm)
 * AgeとAttritionに関係はあるのか？
 * MonthlyIncome, RateとAttritionはどのような関係にあるのか？
 
+上記の仮説をフックにEDAを進めて行きます。
+
 # 要約
 
 * hogehoge
@@ -130,3 +132,25 @@ ggplot(ibm, aes(Attrition, MonthlyIncome, fill = Attrition)) +
 ```
 
 やはりIncomeが低い人が退職する傾向にありそうです。しかしながら、一部Incomeが高い人も退職しており、なにか別の変数の影響も考えられそうです。
+
+### JobLevelとMonthlyIncome
+
+一般的にjob levelが高ければincomeも高いと考えられます。なのでjob level, incomeそしてAttritionの関係を見ていきたいと思います。
+
+```{r}
+ggplot(ibm, aes(JobLevel, MonthlyIncome, group = JobLevel)) +
+  geom_boxplot(aes(fill = factor(JobLevel))) +
+  labs(x = "Job Level") +
+  theme(legend.position = "none")
+```
+
+Job Levelに応じてIncomeが右肩上がりになることは確実なようです。
+ではJob LevelごとのAttritionの割合はどうでしょうか
+
+```{r}
+ggplot(ibm, aes(factor(JobLevel), fill = Attrition)) +
+  geom_bar(position = "fill") +
+  labs(x = "Job Level", y = "Percentage")
+```
+
+右肩下がりでAttritionが減るかと思いきやそうではなさそうです。これもまた何か別の変数の影響が考えられそうです。

@@ -26,6 +26,8 @@ p1 <- foo %>%
   labs(y = "Number of people") +
   theme(legend.position = "none")
 
+ p1
+
 ggplot(ibm, aes(MonthlyIncome, MonthlyRate)) +
   geom_hex()
 
@@ -35,3 +37,28 @@ pm
 
 ggplot(ibm, aes(Attrition, MonthlyIncome, fill = Attrition)) +
   geom_boxplot()
+
+
+# job level ---------------------------------------------------------------
+
+ibm$JobLevel %>% table()
+
+ggplot(ibm, aes(JobLevel, MonthlyIncome, group = JobLevel)) +
+  geom_boxplot(aes(fill = factor(JobLevel))) +
+  theme(legend.position = "none")
+
+ggplot(ibm, aes(factor(JobLevel))) +
+  geom_bar(aes(fill = factor(JobLevel))) +
+  facet_grid(~ Attrition)
+
+ggplot(ibm, aes(factor(JobLevel), group = Attrition)) +
+  geom_bar(aes(y = ..prop.., fill = factor(..x..)),
+           stat = "count", alpha = 0.7) +
+  geom_text(aes(label = scales::percent(..prop..), y = ..prop..),
+            stat = "count", vjust = -.5) +
+  facet_grid(~ Attrition)
+
+ggplot(ibm, aes(factor(JobLevel), fill = Attrition)) +
+  geom_bar(position = "fill") +
+  labs(x = "Job Level", y = "Percentage") +
+  scale_fill_manual(values = c("#448aff", "#ff4081"))
