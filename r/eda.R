@@ -38,7 +38,6 @@ pm
 ggplot(ibm, aes(Attrition, MonthlyIncome, fill = Attrition)) +
   geom_boxplot()
 
-
 # job level ---------------------------------------------------------------
 
 ibm$JobLevel %>% table()
@@ -60,5 +59,29 @@ ggplot(ibm, aes(factor(JobLevel), group = Attrition)) +
 
 ggplot(ibm, aes(factor(JobLevel), fill = Attrition)) +
   geom_bar(position = "fill") +
-  labs(x = "Job Level", y = "Percentage") +
-  scale_fill_manual(values = c("#448aff", "#ff4081"))
+  labs(x = "Job Level", y = "Percentage")
+
+ggplot(ibm, aes(Department, fill = Attrition)) +
+  geom_bar(position = "fill")
+
+ggplot(ibm, aes(factor(Education), MonthlyIncome)) +
+  geom_boxplot()
+
+ibm %>% 
+  group_by(Attrition) %>% 
+  summarise(
+    env_mean = mean(EnvironmentSatisfaction),
+    job_mean = mean(JobSatisfaction),
+    n = n()
+  )
+
+ggplot(ibm, aes(OverTime, fill = Attrition)) +
+  geom_bar(position = "fill")
+
+# OverTime effect Attrition
+ibm %>% 
+  count(Attrition, OverTime) %>% 
+  ggplot(aes(Attrition, OverTime)) +
+  geom_tile(aes(fill = n))
+  
+  
