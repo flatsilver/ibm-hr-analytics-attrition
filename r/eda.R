@@ -75,13 +75,6 @@ ibm %>%
     n = n()
   )
 
+# OverTime effect Attrition
 ggplot(ibm, aes(OverTime, fill = Attrition)) +
   geom_bar(position = "fill")
-
-# OverTime effect Attrition
-ibm %>% 
-  count(Attrition, OverTime) %>% 
-  ggplot(aes(Attrition, OverTime)) +
-  geom_tile(aes(fill = n))
-  
-  
