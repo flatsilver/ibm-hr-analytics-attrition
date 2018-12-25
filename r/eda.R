@@ -18,7 +18,7 @@ foo <- ibm %>%
   group_by(Attrition) %>% 
   count()
 
-p1 <- foo %>% 
+foo %>% 
   mutate(percentage = str_c(as.character(round(n / sum(foo$n) * 100, 1)), "%")) %>% 
   ggplot(aes(Attrition, n, fill = Attrition)) +
   geom_col() +
@@ -26,7 +26,6 @@ p1 <- foo %>%
   labs(y = "Number of people") +
   theme(legend.position = "none")
 
- p1
 
 ggplot(ibm, aes(MonthlyIncome, MonthlyRate)) +
   geom_hex()
@@ -37,6 +36,9 @@ pm
 
 ggplot(ibm, aes(Attrition, MonthlyIncome, fill = Attrition)) +
   geom_boxplot()
+
+ggplot(ibm, aes(MonthlyIncome, fill = Attrition)) +
+  geom_density(alpha = 0.7)
 
 # job level ---------------------------------------------------------------
 
@@ -75,6 +77,32 @@ ibm %>%
     n = n()
   )
 
+# OverTime ----------------------------------------------------------------
+
 # OverTime effect Attrition
 ggplot(ibm, aes(OverTime, fill = Attrition)) +
-  geom_bar(position = "fill")
+  geom_bar(position = "fill") +
+  labs(y = "percentage")
+
+# OverTime and Age
+ggplot(ibm, aes(Age)) +
+  geom_density() +
+  facet_grid(~ OverTime)
+
+ggplot(ibm, aes(OverTime, Age)) +
+  geom_boxplot()
+
+# MonthlyIncome
+ggplot(ibm, aes(MonthlyIncome)) +
+  geom_histogram() +
+  facet_grid(~ OverTime)
+
+ggplot(ibm, aes(MonthlyIncome, fill = OverTime)) +
+  geom_density(alpha = 0.7) +
+  facet_grid(~ Attrition)
+
+ggplot(ibm, aes(MonthlyIncome, fill = OverTime)) +
+  geom_density(alpha = 0.7)
+
+ggplot(ibm, aes(OverTime, MonthlyIncome)) +
+  geom_boxplot()

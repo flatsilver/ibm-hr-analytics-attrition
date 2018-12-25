@@ -154,3 +154,14 @@ ggplot(ibm, aes(factor(JobLevel), fill = Attrition)) +
 ```
 
 右肩下がりでAttritionが減るかと思いきやそうではなさそうです。これもまた何か別の変数の影響が考えられそうです。
+
+## OvertimeとAttritionの関係
+
+```{r}
+ggplot(ibm, aes(OverTime, fill = Attrition)) +
+  geom_bar(position = "fill") +
+  labs(y = "percentage")
+```
+
+OvertimeがYesのAttritionが多いことがグラフから読み取れます。
+
