@@ -106,3 +106,15 @@ ggplot(ibm, aes(MonthlyIncome, fill = OverTime)) +
 
 ggplot(ibm, aes(OverTime, MonthlyIncome)) +
   geom_boxplot()
+
+ibm %>% 
+  ggplot(aes(YearsSinceLastPromotion)) +
+  geom_bar() +
+  facet_grid(~ OverTime)
+
+ibm %>% 
+  group_by(Attrition, OverTime) %>% 
+  count()
+
+ggplot(ibm, aes(Age, fill = OverTime)) +
+  geom_density(alpha = 0.7)

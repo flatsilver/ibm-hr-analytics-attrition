@@ -164,4 +164,4 @@ ggplot(ibm, aes(OverTime, fill = Attrition)) +
 ```
 
 OvertimeがYesのAttritionが多いことがグラフから読み取れます。
-
+先ほどMonthlyIncomeが低い人が退職する傾向にあるということがわかりました。OverTimeはIncomeに影響を与えることが予想されるので、グラフで確認してみます。
